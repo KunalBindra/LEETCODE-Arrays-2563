@@ -1,0 +1,46 @@
+class Solution {
+    private int lowerb(int[] nums,int start,int end, int target)
+    {
+        while(start<end)
+        {
+            int mid=start+(end-start)/2;
+            if(nums[mid]<target)
+            {
+                start=mid+1;
+            }
+            else{
+                end=mid;
+            }
+        }
+        return start;
+    }
+    private int upperb(int[] nums,int start,int end,int target)
+    {
+        while(start<end)
+        {
+            int mid=start+(end-start)/2;
+            if(nums[mid]<=target)
+            {
+                start=mid+1;
+            }
+            else{
+                end=mid;
+            }
+        }
+        return start;
+    }
+    public long countFairPairs(int[] nums, int lower, int upper) {
+        int n =nums.length;
+        Arrays.sort(nums);
+        long result=0;
+        for(int i=0;i<n;i++)
+        {
+            int leftidx=lowerb(nums,i+1,n,lower-nums[i]);
+            int rightidx=upperb(nums,i+1,n,upper-nums[i]);
+            int x=leftidx-i-1;
+            int y=rightidx-i-1;
+            result+=(y-x);
+        }
+        return result;
+    }
+}
